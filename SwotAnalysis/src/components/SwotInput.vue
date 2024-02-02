@@ -10,14 +10,10 @@ defineProps({
 
 const addedSwotElement = ref('');
 
-// function updateLocation() {
-//   addedSwotElement = 'South Pole'
-// }
 const clearInput = () => {
   addedSwotElement.value = '';
 };
 
-// Expose the method to the parent component
 defineExpose({
   clearInput
 });

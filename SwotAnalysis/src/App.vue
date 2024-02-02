@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide } from 'vue';
+import { ref } from 'vue';
 import SingleCard from './components/SingleCard.vue';
 import SwotInput from './components/SwotInput.vue';
 
@@ -20,32 +20,13 @@ defineProps({
 
 const swotAnalysisObjective = ref('');
 function displayBtnIdOnInput(header){
-  console.log(header)
-  
   swotAnalysisObjective.value = header;
-  console.log('id ' + swotAnalysisObjective.value)
 };
 
-const itemsStrengths = ref([
-  // {id:1, label:"cup of tea"},
-  // {id:2, label:"nice book"},
-  // {id:3, label:"black jacket"}
-]);
-const itemsWeaknesses = ref([
-  {id:1, label:"10 of us"},
-  {id:2, label:"one two three"},
-  {id:3, label:"1 of 10"}
-]);
-const itemsOpportunities = ref([
-  {id:1, label:"cup of coffe"},
-  {id:2, label:"a piece of cake"},
-  {id:3, label:"who is bob?"}
-]);
-const itemsThreats = ref([
-  {id:1, label:"go for a walk"},
-  {id:2, label:"run Forest run"},
-  {id:3, label:"singing in the rain"}
-]);
+const itemsStrengths = ref(JSON.parse(localStorage.getItem("itemsStrengths") || '[]'));
+const itemsWeaknesses = ref(JSON.parse(localStorage.getItem("itemsWeaknesses") || '[]'));
+const itemsOpportunities = ref(JSON.parse(localStorage.getItem("itemsOpportunities") || '[]'));
+const itemsThreats = ref(JSON.parse(localStorage.getItem("itemsThreats") || '[]'));
 
 const swotInputRef = ref(null);
 
@@ -55,18 +36,22 @@ const addItemToSwotList = (swotObjective, addedSwotElement) => {
   switch(swotObjective) {
     case 'Strengths':
       itemsStrengths.value.push(newItem);
+      window.localStorage.setItem("itemsStrengths", JSON.stringify(itemsStrengths.value));
       swotInputRef.value.clearInput();
       break;
     case 'Weaknesses':
       itemsWeaknesses.value.push(newItem);
+      window.localStorage.setItem("itemsWeaknesses", JSON.stringify(itemsWeaknesses.value));
       swotInputRef.value.clearInput();
       break;
     case 'Opportunities':
       itemsOpportunities.value.push(newItem);
+      window.localStorage.setItem("itemsOpportunities", JSON.stringify(itemsOpportunities.value));
       swotInputRef.value.clearInput();
       break;
     case 'Threats':
       itemsThreats.value.push(newItem);
+      window.localStorage.setItem("itemsThreats", JSON.stringify(itemsThreats.value));
       swotInputRef.value.clearInput();
       break;
   }
