@@ -1,8 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 import SingleCard from './components/SingleCard.vue';
 import SwotInput from './components/SwotInput.vue';
-// import {itemsStrengths, itemsWeaknesses, itemsOpportunities, itemsThreats } from './components/SwotInput.vue'
+
+defineProps({
+  itemsStrengths:{
+    type: Object
+  },
+  itemsWeaknesses:{
+    type: Object
+  },
+  itemsOpportunities:{
+    type: Object
+  },
+  itemsThreats:{
+    type: Object
+  },
+})
 
 const swotAnalysisObjective = ref('');
 function displayBtnIdOnInput(header){
@@ -13,9 +27,9 @@ function displayBtnIdOnInput(header){
 };
 
 const itemsStrengths = ref([
-  {id:1, label:"cup of tea"},
-  {id:2, label:"nice book"},
-  {id:3, label:"black jacket"}
+  // {id:1, label:"cup of tea"},
+  // {id:2, label:"nice book"},
+  // {id:3, label:"black jacket"}
 ]);
 const itemsWeaknesses = ref([
   {id:1, label:"10 of us"},
@@ -33,41 +47,31 @@ const itemsThreats = ref([
   {id:3, label:"singing in the rain"}
 ]);
 
-defineProps({
-  itemsStrengths:{
-    type: Object
-  },
-  itemsWeaknesses:{
-    type: Object
-  },
-  itemsOpportunities:{
-    type: Object
-  },
-  itemsThreats:{
-    type: Object
-  },
-})
+const swotInputRef = ref(null);
 
 const addItemToSwotList = (swotObjective, addedSwotElement) => {
   console.log(addedSwotElement)
-  console.log(swotObjective)
-  const newItem = { id: Date.now(), label: addedSwotElement }; // Using Date.now() for unique ID
-  console.log(newItem)
+  const newItem = { id: Date.now(), label: addedSwotElement };
   switch(swotObjective) {
     case 'Strengths':
       itemsStrengths.value.push(newItem);
+      swotInputRef.value.clearInput();
       break;
     case 'Weaknesses':
       itemsWeaknesses.value.push(newItem);
+      swotInputRef.value.clearInput();
       break;
     case 'Opportunities':
       itemsOpportunities.value.push(newItem);
+      swotInputRef.value.clearInput();
       break;
     case 'Threats':
       itemsThreats.value.push(newItem);
+      swotInputRef.value.clearInput();
       break;
   }
 };
+
 
 </script>
 
@@ -88,11 +92,13 @@ const addItemToSwotList = (swotObjective, addedSwotElement) => {
         <ul>
           <li v-for="item in itemsStrengths" :key="item.id">{{ item.label }}</li>
         </ul>
+        <p v-if="!itemsStrengths.length">Please add you strength</p>
       </SingleCard>
       <SingleCard cardType="bg-warning" header="Weaknesses" v-on:displayBtnId="displayBtnIdOnInput">
         <ul>
           <li v-for="item in itemsWeaknesses" :key="item.id">{{ item.label }}</li>
         </ul>
+        <p v-if="!itemsWeaknesses.length">Please add you weakness</p>
       </SingleCard>
     </div>
     <div class="row mt-4 mb-4">
@@ -100,15 +106,17 @@ const addItemToSwotList = (swotObjective, addedSwotElement) => {
         <ul>
           <li v-for="item in itemsOpportunities" :key="item.id">{{ item.label }}</li>
         </ul>
+        <p v-if="!itemsOpportunities.length">Please add an opportunity</p>
       </SingleCard>
       <SingleCard cardType="bg-danger" header="Threats" v-on:displayBtnId="displayBtnIdOnInput">
         <ul>
           <li v-for="item in itemsThreats" :key="item.id">{{ item.label }}</li>
         </ul>
+        <p v-if="!itemsThreats.length">Please add a threat</p>
       </SingleCard>
     </div>
     <div class="row mt-4 mb-4">
-      <SwotInput :swot-objective="swotAnalysisObjective"  v-on:addItemToSwotChart="addItemToSwotList"></SwotInput>
+      <SwotInput ref="swotInputRef" :swot-objective="swotAnalysisObjective"  v-on:addItemToSwotChart="addItemToSwotList"></SwotInput>
     </div>
   </main>
 </template>

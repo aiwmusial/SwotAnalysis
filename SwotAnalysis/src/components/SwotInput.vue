@@ -10,12 +10,18 @@ defineProps({
 
 const addedSwotElement = ref('');
 
-// const emit = defineEmits(['add-item']);
-
-// function addItemToSwotChart() {
-//     emit('add-item', swotObjective.value, addedSwotElement.value);
-//     addedSwotElement.value = '';
+// function updateLocation() {
+//   addedSwotElement = 'South Pole'
 // }
+const clearInput = () => {
+  addedSwotElement.value = '';
+};
+
+// Expose the method to the parent component
+defineExpose({
+  clearInput
+});
+
 </script>
 
 <template>
@@ -23,8 +29,13 @@ const addedSwotElement = ref('');
     <div class="input-group">
       <span class="input-group-text">{{ swotObjective ? swotObjective : 'ggg' }}</span>
       <textarea type="text" class="form-control" v-model="addedSwotElement" placeholder="Add an item"></textarea>
-      <SwotEditButton :edit-btn="'Add '+ swotObjective.toLowerCase()" btnType="btn-secondary" @click="$emit('addItemToSwotChart', swotObjective, addedSwotElement)"></SwotEditButton>
-      <h1>{{ addedSwotElement }}</h1>
-</div>
+      <SwotEditButton 
+        :edit-btn="'Add '+ swotObjective.toLowerCase()" 
+        btnType="btn-secondary" 
+        @click="$emit('addItemToSwotChart', swotObjective, addedSwotElement)"
+        :bind:disabled="addedSwotElement.length === 0"
+      >
+      </SwotEditButton>
+    </div>
   </div>  
 </template>

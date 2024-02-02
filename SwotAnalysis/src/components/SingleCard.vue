@@ -13,9 +13,6 @@ defineProps({
   swotList:{
     type: String
   }
-  // swotItem: {
-  //   type: Object
-  // }
 })
 
 </script>
@@ -26,7 +23,13 @@ defineProps({
     <div class="card text-white mb-3" :class="cardType" style="width: 18rem;">
       <div class="card-header d-flex justify-content-between">
         {{ header }} 
-        <SwotEditButton @click="$emit('displayBtnId', header)" :id="header" edit-btn="Add item" btnType="btn-outline-light ms-5"></SwotEditButton>
+        <SwotEditButton 
+          @click="$emit('displayBtnId', header)" 
+          :id="header" 
+          edit-btn="Add item" 
+          btnType="btn-outline-light ms-5"
+        >
+        </SwotEditButton>
       </div>
       <div class="card-body">
         <p class="card-text">
