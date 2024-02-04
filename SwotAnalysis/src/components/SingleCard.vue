@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import SwotEditButton from './SwotEditButton.vue'
 
 defineProps({
@@ -20,7 +19,7 @@ defineProps({
 <template>
   <div class="col-sm-6 col-12 d-flex justify-content-center align-items-center">
     <!-- types: bg-primary, bg-success, bg-danger, bg-warning -->
-    <div class="card text-white mb-3" :class="cardType" style="width: 18rem;">
+    <div class="card text-white w-100 mb-3 ms-3 me-3 overflow-auto" :class="cardType" style="height: 20rem;">
       <div class="card-header d-flex justify-content-between">
         {{ header }} 
         <SwotEditButton 
@@ -37,7 +36,12 @@ defineProps({
         </p>
       </div>
       <div class="card-footer d-flex justify-content-end">
-        <SwotEditButton edit-btn="Remove item" btnType="btn-outline-light ms-5"></SwotEditButton>
+        <SwotEditButton 
+          edit-btn="Remove item" 
+          btnType="btn-outline-light ms-5"
+          @click="$emit('removeItemFromSwotChart', header)"
+        >
+        </SwotEditButton>
       </div>
     </div>
   </div>  

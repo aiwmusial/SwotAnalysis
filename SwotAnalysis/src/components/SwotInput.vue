@@ -22,14 +22,14 @@ defineExpose({
 
 <template>
   <div class="col-12 d-flex justify-content-center align-items-center">
-    <div class="input-group">
-      <span class="input-group-text">{{ swotObjective ? swotObjective : 'ggg' }}</span>
+    <div class="input-group  ms-3 me-3">
+      <span class="input-group-text">{{ swotObjective }}</span>
       <textarea type="text" class="form-control" v-model="addedSwotElement" placeholder="Add an item"></textarea>
       <SwotEditButton 
         :edit-btn="'Add '+ swotObjective.toLowerCase()" 
         btnType="btn-secondary" 
         @click="$emit('addItemToSwotChart', swotObjective, addedSwotElement)"
-        :bind:disabled="addedSwotElement.length === 0"
+        v-bind:disabled="addedSwotElement.length < 3"
       >
       </SwotEditButton>
     </div>
