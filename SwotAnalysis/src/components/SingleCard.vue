@@ -26,7 +26,7 @@ defineProps({
           @click="$emit('displayBtnId', header)" 
           :id="header" 
           edit-btn="Add item" 
-          btnType="btn-outline-light ms-5"
+          btnType="btn-outline-light ms-3"
         >
         </SwotEditButton>
       </div>
